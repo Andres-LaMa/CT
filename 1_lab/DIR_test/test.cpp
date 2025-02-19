@@ -2,7 +2,7 @@
 #define MACRO 123
 #ifdef DEBUG
 
-#  include <iostream>
+# include <iostream>
 #if DEBUG
 #
 

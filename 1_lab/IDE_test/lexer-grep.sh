@@ -1,14 +1,14 @@
 #!/bin/sh
 
-DIR="folly"
-
+DIR1="folly"
+DIR2="./IDE_test"
 # ^ $ * + ? {}
 # a
 # aa
 # aaaaa
 REGEXP="[_a-zA-Z][_a-zA-Z0-9]*"
 
-for f in `find $DIR -name "*.cpp"`; do
+for f in `find $DIR2 -name "*.cpp"`; do
     echo "*** File $f"
-    grep -o -E "$REGEXP" $f
+    grep --color=always -E "$REGEXP" $f
 done
