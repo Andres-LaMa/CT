@@ -140,7 +140,7 @@ DIGIT           [0-9]
 <STRING>\\0 {
     yylval.error_msg = "Unterminated string constant";
     BEGIN 0;
-    //curr_lineno++;
+    // curr_lineno++;
     return ERROR;
 }
 
@@ -193,6 +193,8 @@ DIGIT           [0-9]
     }
 
     /* TODO */
+
+    /* TODO  END */
 
     BEGIN 0;
     return STR_CONST;
@@ -279,6 +281,7 @@ f(?i:alse) {
  /* TYPEID */
 [A-Z][A-Za-z0-9_]* {
     /* TODO*/
+    cool_yylval.symbol = idtable.add_string(yytext);
     return TYPEID;
 }
 

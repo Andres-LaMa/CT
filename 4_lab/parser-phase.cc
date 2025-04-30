@@ -23,23 +23,27 @@ int main(int argc, char **argv)
 {
     yy_flex_debug = 0;
     cool_yydebug = 0;
-    lex_verbose  = 0;
+    lex_verbose = 0;
 
-    for (int i = 1; i < argc; i++) {
+    for (int i = 1; i < argc; i++)
+    {
         token_file = std::fopen(argv[i], "r");
-        if (token_file == NULL) {
-            std::cerr << "Error: can not open file " << argv[i] << std::endl;
+        if (token_file == NULL)
+        {
+            std::cerr << "Error: can not open file " << argv[i] << "\n";
             std::exit(1);
         }
         curr_lineno = 1;
 
         cool_yyparse();
-        if (parse_errors != 0) {
+        if (parse_errors != 0)
+        {
             std::cerr << "Error: parse errors\n";
             std::exit(1);
         }
 
         /* TODO: dump AST tree (ast_root) to std::cerr */
+        ast_root->dump_with_types(std::cout, 0);
 
         std::fclose(token_file);
     }

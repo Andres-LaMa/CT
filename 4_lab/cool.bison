@@ -103,6 +103,8 @@ extern int yylex();
 %left '~'
 %left '@'
 %left '.'
+%left '('
+
 
 %%
 
@@ -126,7 +128,10 @@ class_list :
 class :
   CLASS TYPEID '{' feature_list '}' ';'
   { $$ = class_($2, idtable.add_string("Object"), $4, stringtable.add_string(curr_filename)); }
+| CLASS TYPEID INHERITS TYPEID '{' feature_list '}' ';'
+  { $$ = class_($2, $4, $6, stringtable.add_string(curr_filename)); }
 ;
+
 
 /* Feature list (may be empty), but no empty features in list */
 feature_list :
@@ -186,6 +191,11 @@ expr :
   { $$ = object($1); }
 | OBJECTID ASSIGN expr
   { $$ = assign($1, $3); }
+| expr '/' expr
+  { $$ = divide($1, $3); }
+| WHILE expr LOOP expr POOL
+  { $$ = loop($2, $4); }
+
 
 | expr '.' OBJECTID '(' expr_list_comma ')' /* dispatch */
   { $$ = dispatch($1, $3, $5); }
